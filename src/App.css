@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+
+:root {
+  /* Dark Graphite Theme */
+
+  /* Backgrounds */
+  --bg-app: #121316;
+  --bg-surface: #1e1f24;
+  --bg-surface-elevated: #282a31;
+  --bg-surface-hover: #32353f;
+
+  /* Borders */
+  --border-subtle: #2d303a;
+  --border-strong: #404452;
+
+  /* Typography */
+  --text-main: #f0f0f5;
+  --text-muted: #9598a6;
+  --text-placeholder: #6a6d7c;
+
+  /* Accents */
+  --accent-primary: #5a67d8;
+  --accent-primary-hover: #4c51bf;
+  --accent-secondary: #7f9cf5;
+
+  /* States */
+  --status-success: #48bb78;
+  --status-warning: #ecc94b;
+  --status-danger: #f56565;
+
+  /* Spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.5rem;
+  --spacing-6: 2rem;
+  --spacing-8: 3rem;
+
+  /* Radii */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+
+  /* Transitions */
+  --transition-fast: 100ms ease-in-out;
+  --transition-normal: 200ms ease-in-out;
+
+  /* Fonts */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-app);
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  flex: 1;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Base resets */
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
