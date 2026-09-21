@@ -11,61 +11,62 @@ export default function Settings() {
   if (!isLoaded) return null;
 
   return (
-    <div className="space-y-8 max-w-3xl mx-auto animate-in fade-in duration-300">
+    <div className="space-y-8 max-w-3xl mx-auto animate-in fade-in duration-300 p-8">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight mb-2">Settings</h2>
-        <p className="text-[var(--text-muted)] text-sm">Manage your profile, preferences, and application settings.</p>
+        <h2 className="text-3xl font-bold tracking-tight text-white mb-2">Configurações</h2>
+        <p className="text-gray-400 text-sm">Gerencie seu perfil, preferências e configurações do aplicativo.</p>
       </div>
 
-      <Card>
+      <Card className="border-white/10 bg-[var(--bg-surface)]">
         <CardHeader>
-          <CardTitle>Profile Information</CardTitle>
+          <CardTitle className="text-white">Informações do Perfil</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-[var(--text-main)]">Display Name</label>
+            <label className="text-sm font-bold text-white uppercase tracking-wider">Nome de Exibição</label>
             <Input
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Your display name"
+              placeholder="Seu nome"
+              className="bg-white/5 border-white/10 text-white focus:border-white"
             />
           </div>
           <div className="pt-2">
-            <Button>Save Changes</Button>
+            <Button className="bg-white text-black hover:bg-gray-200">Salvar Alterações</Button>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border-white/10 bg-[var(--bg-surface)]">
         <CardHeader>
-          <CardTitle>Integrations (Coming Soon)</CardTitle>
+          <CardTitle className="text-white">Integrações (Em Breve)</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-[var(--text-muted)]">
-            Connect external providers to sync library metadata, artwork, and legitimate store information.
+          <p className="text-sm text-gray-400">
+            Conecte provedores externos para sincronizar metadados da biblioteca, artes e informações legítimas da loja.
           </p>
           <div className="flex gap-4">
-            <Button variant="secondary" disabled>Connect Steam</Button>
-            <Button variant="secondary" disabled>Connect GOG</Button>
+            <Button variant="secondary" className="bg-white/5 border-white/10 text-gray-400 cursor-not-allowed" disabled>Conectar Steam</Button>
+            <Button variant="secondary" className="bg-white/5 border-white/10 text-gray-400 cursor-not-allowed" disabled>Conectar GOG</Button>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border-white/10 bg-[var(--bg-surface)]">
         <CardHeader>
-          <CardTitle>Advanced</CardTitle>
+          <CardTitle className="text-white">Avançado</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="p-4 bg-[var(--status-danger)]/10 border border-[var(--status-danger)]/20 rounded-md">
-            <h4 className="text-[var(--status-danger)] font-medium mb-1">Danger Zone</h4>
-            <p className="text-sm text-[var(--text-muted)] mb-3">Clear all local application data, including your registered games and activity.</p>
-            <Button variant="danger" onClick={() => {
-              if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+          <div className="p-5 border border-red-500/30 bg-red-500/5 rounded-md">
+            <h4 className="text-red-400 font-bold mb-2 uppercase tracking-wider">Zona de Perigo</h4>
+            <p className="text-sm text-gray-400 mb-4">Apague todos os dados locais do aplicativo, incluindo seus jogos registrados e atividades.</p>
+            <Button variant="danger" className="bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/50" onClick={() => {
+              if (confirm('Tem certeza de que deseja apagar todos os dados? Isso não pode ser desfeito.')) {
                 localStorage.clear();
                 window.location.reload();
               }
             }}>
-              Clear All Local Data
+              Apagar Todos os Dados
             </Button>
           </div>
         </CardContent>

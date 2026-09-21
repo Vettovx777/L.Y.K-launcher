@@ -26,56 +26,56 @@ export default function Activity() {
 
   const getEventIcon = (type: ActivityEventType) => {
     switch (type) {
-      case 'GAME_ADDED': return <Plus className="w-5 h-5 text-blue-400" />;
-      case 'GAME_LAUNCHED': return <Play className="w-5 h-5 text-green-400" />;
-      case 'SESSION_COMPLETED': return <Ghost className="w-5 h-5 text-purple-400" />;
-      case 'ACHIEVEMENT_UNLOCKED': return <Trophy className="w-5 h-5 text-yellow-400" />;
-      case 'BADGE_UNLOCKED': return <Award className="w-5 h-5 text-orange-400" />;
-      case 'PROFILE_CHANGED': return <Settings2 className="w-5 h-5 text-gray-400" />;
-      default: return <div className="w-5 h-5 bg-gray-500 rounded-full" />;
+      case 'GAME_ADDED': return <Plus className="w-5 h-5 text-white" />;
+      case 'GAME_LAUNCHED': return <Play className="w-5 h-5 text-white" />;
+      case 'SESSION_COMPLETED': return <Ghost className="w-5 h-5 text-white" />;
+      case 'ACHIEVEMENT_UNLOCKED': return <Trophy className="w-5 h-5 text-white" />;
+      case 'BADGE_UNLOCKED': return <Award className="w-5 h-5 text-white" />;
+      case 'PROFILE_CHANGED': return <Settings2 className="w-5 h-5 text-white" />;
+      default: return <div className="w-5 h-5 bg-white rounded-full" />;
     }
   };
 
   const getEventDescription = (event: ActivityEvent) => {
-    const title = event.details?.gameTitle || 'Unknown Game';
+    const title = event.details?.gameTitle || 'Jogo Desconhecido';
     switch (event.type) {
-      case 'GAME_ADDED': return <span>Added <span className="font-semibold">{title}</span> to library</span>;
-      case 'GAME_LAUNCHED': return <span>Launched <span className="font-semibold">{title}</span></span>;
-      case 'SESSION_COMPLETED': return <span>Finished playing <span className="font-semibold">{title}</span></span>;
-      case 'ACHIEVEMENT_UNLOCKED': return <span>Unlocked achievement <span className="font-semibold">"{event.details?.achievementName}"</span> in {title}</span>;
-      case 'BADGE_UNLOCKED': return <span>Earned a new badge!</span>;
-      case 'PROFILE_CHANGED': return <span>Updated profile settings</span>;
-      default: return <span>Unknown activity</span>;
+      case 'GAME_ADDED': return <span>Adicionou <span className="font-bold text-white">{title}</span> à biblioteca</span>;
+      case 'GAME_LAUNCHED': return <span>Iniciou <span className="font-bold text-white">{title}</span></span>;
+      case 'SESSION_COMPLETED': return <span>Terminou de jogar <span className="font-bold text-white">{title}</span></span>;
+      case 'ACHIEVEMENT_UNLOCKED': return <span>Desbloqueou conquista <span className="font-bold text-white">"{event.details?.achievementName}"</span> em {title}</span>;
+      case 'BADGE_UNLOCKED': return <span>Ganhou uma nova insígnia!</span>;
+      case 'PROFILE_CHANGED': return <span>Atualizou o perfil</span>;
+      default: return <span>Atividade desconhecida</span>;
     }
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300 max-w-4xl mx-auto h-full flex flex-col">
+    <div className="space-y-8 animate-in fade-in duration-300 max-w-4xl mx-auto h-full flex flex-col p-8">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold tracking-tight">Activity Timeline</h2>
-        <Button size="sm" variant="secondary" onClick={handleSimulateActivity}>Simulate Event</Button>
+        <h2 className="text-3xl font-bold tracking-tight text-white">Linha do Tempo</h2>
+        <Button size="sm" variant="secondary" className="bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white" onClick={handleSimulateActivity}>Simular Evento</Button>
       </div>
 
       {activities.length === 0 ? (
-        <div className="flex-1 flex flex-col items-center justify-center border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-surface)] py-16">
-          <Ghost className="w-12 h-12 text-[var(--text-muted)] mb-4" />
-          <h3 className="text-lg font-semibold mb-2">No activity yet</h3>
-          <p className="text-[var(--text-muted)]">Your gaming history will appear here.</p>
+        <div className="flex-1 flex flex-col items-center justify-center border border-white/20 rounded-xl bg-[var(--bg-surface)] py-16">
+          <Ghost className="w-16 h-16 text-gray-400 mb-6" />
+          <h3 className="text-2xl font-bold mb-3 text-white">Nenhuma atividade</h3>
+          <p className="text-gray-400">Seu histórico de jogos aparecerá aqui.</p>
         </div>
       ) : (
-        <div className="relative border-l-2 border-[var(--border-subtle)] ml-6 space-y-8 pb-8 overflow-y-auto flex-1 px-4">
+        <div className="relative border-l-2 border-white/20 ml-6 space-y-8 pb-8 overflow-y-auto flex-1 px-4">
           {activities.map((event) => (
             <div key={event.id} className="relative pl-8">
-              <div className="absolute -left-[21px] top-1 p-1.5 bg-[var(--bg-surface-elevated)] border-2 border-[var(--border-subtle)] rounded-full z-10 shadow-sm">
+              <div className="absolute -left-[21px] top-1 p-2 bg-black border-2 border-white/30 rounded-full z-10 shadow-lg">
                 {getEventIcon(event.type)}
               </div>
-              <Card className="hover:border-[var(--border-strong)] transition-colors">
-                <div className="p-4 sm:p-5">
+              <Card className="hover:border-white/50 border-white/10 bg-[var(--bg-surface)] transition-colors">
+                <div className="p-6">
                   <div className="flex justify-between items-start gap-4">
-                    <p className="text-[var(--text-main)] text-sm sm:text-base leading-relaxed">
+                    <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                       {getEventDescription(event)}
                     </p>
-                    <time className="text-xs text-[var(--text-placeholder)] whitespace-nowrap pt-1 flex-shrink-0">
+                    <time className="text-xs text-gray-500 whitespace-nowrap pt-1 flex-shrink-0 uppercase tracking-wider font-semibold">
                       {new Date(event.timestamp).toLocaleString(undefined, {
                         month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
                       })}
