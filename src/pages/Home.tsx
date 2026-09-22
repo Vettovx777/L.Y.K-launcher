@@ -9,11 +9,21 @@ import { Play } from 'lucide-react';
 
 export default function Home() {
   const [news, setNews] = useState<NewsArticle[]>([]);
-  const { profile } = useAppStore();
+  const { profile, games, activities } = useAppStore();
 
   useEffect(() => {
     providers.news.getLatestNews().then(setNews);
   }, []);
+
+  const recentGames = games
+    .filter(g => g.lastPlayedAt)
+    .sort((a, b) => new Date(b.lastPlayedAt!).getTime() - new Date(a.lastPlayedAt!).getTime())
+    .slice(0, 4);
+
+  const completedSessions = activities.filter(a => a.type === 'SESSION_COMPLETED');
+  const totalPlaytime = completedSessions.reduce((acc, curr) => acc + (curr.details?.durationMinutes || 0), 0) / 60;
+  const achievementsCount = activities.filter(a => a.type === 'ACHIEVEMENT_UNLOCKED').length;
+
 
   return (
     <div className="animate-in fade-in duration-300">
@@ -26,33 +36,44 @@ export default function Home() {
             <Button variant="ghost" size="sm" className="text-white hover:bg-white/10">Ver Todos</Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {/* Mock Recent Games */}
-            {[1, 2, 3, 4].map((i) => (
-              <Card key={i} className="group relative overflow-hidden transition-all hover:shadow-xl hover:border-white/50 border-white/10 bg-[var(--bg-surface)]">
-                <div className="aspect-[16/9] bg-black relative">
-                  <img
-                    src={`https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop&text=Game${i}`}
-                    alt="Game cover"
-                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          {recentGames.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {recentGames.map((game) => (
+                <Card key={game.id} className="group relative overflow-hidden transition-all hover:shadow-xl hover:border-white/50 border-white/10 bg-[var(--bg-surface)]">
+                  <div className="aspect-[16/9] bg-black relative">
+                    {game.backgroundUrl || game.coverUrl ? (
+                      <img
+                        src={game.backgroundUrl || game.coverUrl}
+                        alt={`${game.title} cover`}
+                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-800 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
+                         <span className="text-gray-400 font-bold">{game.title}</span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-bold text-xl text-white mb-1 shadow-black drop-shadow-lg truncate">Jogo Recente {i}</h3>
-                    <p className="text-sm text-gray-300">Jogou há 2 horas</p>
-                  </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <h3 className="font-bold text-xl text-white mb-1 shadow-black drop-shadow-lg truncate">{game.title}</h3>
+                      <p className="text-sm text-gray-300">Última vez: {new Date(game.lastPlayedAt!).toLocaleDateString()}</p>
+                    </div>
 
-                  {/* Play button overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
-                    <Button className="rounded-full w-16 h-16 bg-white text-black hover:bg-gray-200 shadow-xl hover:scale-105 transition-transform">
-                      <Play className="fill-current w-6 h-6 ml-1" />
-                    </Button>
+                    {/* Play button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
+                      <Button className="rounded-full w-16 h-16 bg-white text-black hover:bg-gray-200 shadow-xl hover:scale-105 transition-transform">
+                        <Play className="fill-current w-6 h-6 ml-1" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
-          </div>
+                </Card>
+              ))}
+            </div>
+          ) : (
+             <div className="text-center py-12 border border-white/10 rounded-lg bg-[var(--bg-surface)]">
+               <p className="text-gray-400">Nenhum jogo recente. Adicione e jogue um jogo para vê-lo aqui.</p>
+             </div>
+          )}
         </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -64,17 +85,17 @@ export default function Home() {
                   <div className="flex justify-between items-center text-center">
                     <div>
                       <p className="text-gray-400 text-sm mb-2 uppercase tracking-wider font-semibold">Jogos</p>
-                      <p className="text-4xl font-bold text-white">12</p>
+                      <p className="text-4xl font-bold text-white">{games.length}</p>
                     </div>
                     <div className="w-px h-16 bg-white/20"></div>
                     <div>
                       <p className="text-gray-400 text-sm mb-2 uppercase tracking-wider font-semibold">Tempo Total</p>
-                      <p className="text-4xl font-bold text-white">48h</p>
+                      <p className="text-4xl font-bold text-white">{Math.round(totalPlaytime)}h</p>
                     </div>
                     <div className="w-px h-16 bg-white/20"></div>
                     <div>
                       <p className="text-gray-400 text-sm mb-2 uppercase tracking-wider font-semibold">Conquistas</p>
-                      <p className="text-4xl font-bold text-white">5</p>
+                      <p className="text-4xl font-bold text-white">{achievementsCount}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -84,24 +105,24 @@ export default function Home() {
             <section>
               <h2 className="text-2xl font-bold tracking-tight text-white mb-6">Recomendações</h2>
               <div className="space-y-4">
-                {[1, 2].map(i => (
-                  <Card key={i} className="hover:bg-white/5 transition-colors cursor-pointer border-white/10 bg-[var(--bg-surface)]">
-                    <div className="flex p-5 space-x-5 items-center">
-                      <div className="w-20 h-20 bg-black rounded-lg flex-shrink-0 overflow-hidden relative">
-                         <img src={`https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=200&auto=format&fit=crop`} alt="Rec" className="w-full h-full object-cover" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-bold text-lg text-white">Jogo Recomendado {i}</h4>
-                        <p className="text-sm text-gray-400 mt-1">Porque você jogou Hollow Knight</p>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
+                 <div className="text-center py-8 border border-white/10 rounded-lg bg-[var(--bg-surface)]">
+                   <p className="text-gray-400 text-sm">Sem recomendações no momento.<br/>Basearemos novas recomendações na sua biblioteca.</p>
+                 </div>
               </div>
             </section>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-10">
+            <section>
+              <h2 className="text-2xl font-bold tracking-tight text-white mb-6">Amigos Jogando</h2>
+              <div className="space-y-4">
+                 <div className="text-center py-8 border border-white/10 rounded-lg bg-[var(--bg-surface)]">
+                   <p className="text-gray-400 text-sm">Nenhum amigo online no momento.<br/>Conecte suas plataformas para ver a atividade.</p>
+                 </div>
+              </div>
+            </section>
+
+            <section>
             <h2 className="text-2xl font-bold tracking-tight text-white mb-6">Notícias</h2>
             <div className="space-y-5">
               {news.map(article => (
@@ -120,6 +141,7 @@ export default function Home() {
                 <p className="text-gray-400 text-sm">Nenhuma notícia disponível no momento.</p>
               )}
             </div>
+            </section>
           </div>
         </div>
       </div>
