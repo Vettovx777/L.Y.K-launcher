@@ -105,18 +105,18 @@ export default function MyGames() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 sm:gap-8 overflow-y-auto pb-8">
           {filteredGames.map(game => (
-            <Card key={game.id} className="group relative overflow-hidden transition-all hover:shadow-xl hover:border-white/50 border-white/10 bg-[var(--bg-surface)] cursor-pointer">
-              <div className="aspect-[3/4] bg-black relative flex flex-col items-center justify-center p-4 text-center">
+            <Card key={game.id} className="launcher-card group relative overflow-hidden border-white/10 bg-[var(--bg-surface)] cursor-pointer">
+              <div className="aspect-[3/4] bg-black relative flex flex-col items-center justify-center text-center overflow-hidden">
                 {game.coverUrl ? (
-                  <img src={game.coverUrl} alt={game.title} className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                  <img src={game.coverUrl} alt={game.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-[var(--ease-spring)] group-hover:scale-110" />
                 ) : (
-                  <div className="font-bold text-gray-500 text-xl rotate-[-10deg] px-2 uppercase tracking-widest">{game.title}</div>
+                  <div className="font-bold text-gray-500 text-xl rotate-[-10deg] px-2 uppercase tracking-widest transition-transform duration-500 ease-[var(--ease-spring)] group-hover:scale-110">{game.title}</div>
                 )}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none" />
 
-                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity p-4">
+                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 p-4">
                   <Button
-                    className="rounded-full w-14 h-14 mb-4 bg-white text-black hover:bg-gray-200 shadow-xl hover:scale-105 transition-transform"
+                    className="rounded-full w-14 h-14 mb-4 bg-white text-black hover:bg-gray-200 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-110 transition-transform duration-300 ease-[var(--ease-spring)]"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleLaunch(game);
@@ -125,14 +125,14 @@ export default function MyGames() {
                   >
                     <Play className="fill-current w-6 h-6 ml-1" />
                   </Button>
-                  <p className="text-sm text-gray-300 font-semibold uppercase tracking-wider">
+                  <p className="text-sm text-gray-200 font-bold uppercase tracking-wider drop-shadow-md">
                     {Math.floor(game.playtimeMinutes / 60)}h {(game.playtimeMinutes % 60)}m jogados
                   </p>
                 </div>
               </div>
-              <div className="p-4 bg-[var(--bg-surface)] border-t border-white/10">
-                <h3 className="font-bold text-base truncate text-white" title={game.title}>{game.title}</h3>
-                <p className="text-xs text-gray-500 mt-1 uppercase tracking-wider font-semibold">{game.source}</p>
+              <div className="p-4 bg-[var(--bg-surface)] border-t border-white/10 z-10 relative">
+                <h3 className="font-bold text-base truncate text-white transition-colors group-hover:text-gray-200" title={game.title}>{game.title}</h3>
+                <p className="text-xs text-gray-500 mt-1 uppercase tracking-wider font-semibold transition-colors group-hover:text-gray-400">{game.source}</p>
               </div>
             </Card>
           ))}

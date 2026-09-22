@@ -39,29 +39,29 @@ export default function Home() {
           {recentGames.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {recentGames.map((game) => (
-                <Card key={game.id} className="group relative overflow-hidden transition-all hover:shadow-xl hover:border-white/50 border-white/10 bg-[var(--bg-surface)]">
-                  <div className="aspect-[16/9] bg-black relative">
+                <Card key={game.id} className="launcher-card group relative overflow-hidden border-white/10 bg-[var(--bg-surface)] cursor-pointer">
+                  <div className="aspect-[16/9] bg-black relative overflow-hidden">
                     {game.backgroundUrl || game.coverUrl ? (
                       <img
                         src={game.backgroundUrl || game.coverUrl}
                         alt={`${game.title} cover`}
-                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                        className="w-full h-full object-cover transition-transform duration-500 ease-[var(--ease-spring)] group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gray-800 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
-                         <span className="text-gray-400 font-bold">{game.title}</span>
+                      <div className="w-full h-full bg-gray-900 flex items-center justify-center transition-transform duration-500 ease-[var(--ease-spring)] group-hover:scale-105">
+                         <span className="text-gray-500 font-bold uppercase tracking-widest">{game.title}</span>
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
 
-                    <div className="absolute bottom-0 left-0 right-0 p-5">
-                      <h3 className="font-bold text-xl text-white mb-1 shadow-black drop-shadow-lg truncate">{game.title}</h3>
-                      <p className="text-sm text-gray-300">Última vez: {new Date(game.lastPlayedAt!).toLocaleDateString()}</p>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 transform transition-transform duration-300 group-hover:-translate-y-2">
+                      <h3 className="font-bold text-2xl text-white mb-1 drop-shadow-md truncate tracking-tight">{game.title}</h3>
+                      <p className="text-sm text-gray-400 font-medium tracking-wide">Última vez: {new Date(game.lastPlayedAt!).toLocaleDateString()}</p>
                     </div>
 
                     {/* Play button overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
-                      <Button className="rounded-full w-16 h-16 bg-white text-black hover:bg-gray-200 shadow-xl hover:scale-105 transition-transform">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/40 backdrop-blur-[2px]">
+                      <Button className="rounded-full w-16 h-16 bg-white text-black hover:bg-gray-200 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-110 transition-transform duration-300 ease-[var(--ease-spring)]">
                         <Play className="fill-current w-6 h-6 ml-1" />
                       </Button>
                     </div>
@@ -126,12 +126,13 @@ export default function Home() {
             <h2 className="text-2xl font-bold tracking-tight text-white mb-6">Notícias</h2>
             <div className="space-y-5">
               {news.map(article => (
-                <Card key={article.id} className="overflow-hidden flex flex-col cursor-pointer hover:border-white/40 transition-colors border-white/10 bg-[var(--bg-surface)]">
-                  <div className="h-40 bg-black bg-cover bg-center" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=400&auto=format&fit=crop)` }} />
-                  <CardContent className="p-5 pt-5 flex-1 flex flex-col">
-                    <h4 className="font-bold text-base text-white line-clamp-2">{article.title}</h4>
+                <Card key={article.id} className="launcher-card overflow-hidden flex flex-col cursor-pointer hover:border-white/30 border-white/10 bg-[var(--bg-surface)] group">
+                  <div className="h-40 bg-black bg-cover bg-center transition-transform duration-500 ease-[var(--ease-spring)] group-hover:scale-105" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=400&auto=format&fit=crop)` }} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <CardContent className="p-5 pt-5 flex-1 flex flex-col z-10 bg-[var(--bg-surface)]">
+                    <h4 className="font-bold text-base text-white line-clamp-2 group-hover:text-white transition-colors">{article.title}</h4>
                     <p className="text-sm text-gray-400 mt-3 flex-1 line-clamp-3">{article.summary}</p>
-                    <span className="text-xs text-gray-500 mt-4 uppercase tracking-wider font-semibold">
+                    <span className="text-xs text-gray-500 mt-4 uppercase tracking-wider font-semibold group-hover:text-gray-300 transition-colors">
                       {new Date(article.publishedAt).toLocaleDateString()}
                     </span>
                   </CardContent>

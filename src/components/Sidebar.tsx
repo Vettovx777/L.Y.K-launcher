@@ -27,13 +27,13 @@ export function Sidebar() {
             key={item.to}
             to={item.to}
             className={({ isActive }) => cn(
-              'flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors text-sm font-medium',
+              'launcher-nav-item flex items-center space-x-3 px-3 py-2.5 rounded-md text-sm font-medium border border-transparent',
               isActive
-                ? 'bg-white/10 text-white'
-                : 'text-[var(--text-muted)] hover:bg-[var(--bg-surface-hover)] hover:text-white'
+                ? 'bg-[var(--bg-surface-hover)] text-white border-l-2 border-l-white/50 pl-[10px]'
+                : 'text-[var(--text-muted)] hover:bg-[var(--bg-surface-elevated)] hover:text-white'
             )}
           >
-            <item.icon size={18} />
+            <item.icon size={18} className="transition-transform duration-200 group-hover:scale-110" />
             <span>{item.label}</span>
           </NavLink>
         ))}
@@ -43,13 +43,13 @@ export function Sidebar() {
         <NavLink
           to="/settings"
           className={({ isActive }) => cn(
-            'flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors text-sm font-medium',
+            'launcher-nav-item flex items-center space-x-3 px-3 py-2.5 rounded-md text-sm font-medium border border-transparent',
             isActive
-              ? 'bg-white/10 text-white'
-              : 'text-[var(--text-muted)] hover:bg-[var(--bg-surface-hover)] hover:text-white'
+              ? 'bg-[var(--bg-surface-hover)] text-white border-l-2 border-l-white/50 pl-[10px]'
+              : 'text-[var(--text-muted)] hover:bg-[var(--bg-surface-elevated)] hover:text-white'
           )}
         >
-          <SettingsIcon size={18} />
+          <SettingsIcon size={18} className="transition-transform duration-200 group-hover:rotate-45" />
           <span>Configurações</span>
         </NavLink>
       </div>
