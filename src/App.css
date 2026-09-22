@@ -5,29 +5,29 @@
   /* Dark Graphite Theme */
 
   /* Backgrounds */
-  --bg-app: #121316;
-  --bg-surface: #1e1f24;
-  --bg-surface-elevated: #282a31;
-  --bg-surface-hover: #32353f;
+  --bg-app: #000000;
+  --bg-surface: #111111;
+  --bg-surface-elevated: #1a1a1a;
+  --bg-surface-hover: #222222;
 
   /* Borders */
-  --border-subtle: #2d303a;
-  --border-strong: #404452;
+  --border-subtle: #333333;
+  --border-strong: #ffffff;
 
   /* Typography */
-  --text-main: #f0f0f5;
-  --text-muted: #9598a6;
-  --text-placeholder: #6a6d7c;
+  --text-main: #ffffff;
+  --text-muted: #aaaaaa;
+  --text-placeholder: #666666;
 
   /* Accents */
-  --accent-primary: #5a67d8;
-  --accent-primary-hover: #4c51bf;
-  --accent-secondary: #7f9cf5;
+  --accent-primary: #ffffff;
+  --accent-primary-hover: #dddddd;
+  --accent-secondary: #aaaaaa;
 
   /* States */
-  --status-success: #48bb78;
-  --status-warning: #ecc94b;
-  --status-danger: #f56565;
+  --status-success: #ffffff;
+  --status-warning: #ffffff;
+  --status-danger: #ff4444;
 
   /* Spacing */
   --spacing-1: 0.25rem;
